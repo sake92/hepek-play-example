@@ -12,7 +12,7 @@ class HomeController @Inject()(cc: ControllerComponents)
     extends AbstractController(cc)
     with I18nSupport {
 
-  def index() = Action { implicit request: Request[AnyContent] =>
+  def index() = Action { implicit request =>
     Ok(views.ExampleFormView(ExampleForm.form))
   }
 

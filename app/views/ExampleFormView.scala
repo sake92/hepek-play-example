@@ -1,18 +1,21 @@
 package views
 
 import play.api.data.Form
+import play.api.mvc.Request
 import scalatags.Text.all.{form => _, _}
 import forms.ExampleForm
 import util.Imports._
 import grid._
 import hf._      // hf is HepekForm
 import classes._ // utility classes
+import views.html.helper.CSRF
 
 case class ExampleFormView(
     exampleForm: Form[ExampleForm],
     exampleFormValues: Option[ExampleForm] = None
 )(
-    implicit messages: play.api.i18n.Messages
+    implicit request: Request[_],
+    messages: play.api.i18n.Messages
 ) extends util.MainTemplate {
 
   override def pageSettings =
@@ -35,6 +38,7 @@ case class ExampleFormView(
   // fc is short for FormComponents
   def formFrag =
     form()(controllers.routes.HomeController.createForm)(
+      csrfFrag,
       fc.formFieldset("Contact data")(
         inputEmail()(exampleForm("email"), help = "Please enter your email"),
         inputPassword(required)(exampleForm("password")),
@@ -63,6 +67,12 @@ case class ExampleFormView(
           label = "Animals (multi-select)"
         )
       ),
-      fc.inputSubmit()("Submit") // low-level, raw API
+      fc.inputSubmit(btnPrimary)("Submit") // low-level, raw API
     )
+
+  // TODO make helper
+  private def csrfFrag = {
+    val token = CSRF.getToken
+    fc.inputHidden(value := token.value)(token.name)
+  }
 }
