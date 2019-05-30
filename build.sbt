@@ -9,6 +9,6 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
 
-libraryDependencies += "ba.sake" %% "hepek-play" % "0.3.1+17-daa7ea49-SNAPSHOT"
+libraryDependencies += "ba.sake" %% "hepek-play" % "0.3.1+50-88bab1d7-SNAPSHOT"
 
 resolvers += Resolver.sonatypeRepo("snapshots")

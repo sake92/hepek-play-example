@@ -1,30 +1,68 @@
 package views
 
 import play.api.data.Form
-import scalatags.Text.all._
+import scalatags.Text.all.{form => _, _}
 import forms.ExampleForm
-import util._, Imports._
+import util.Imports._
+import grid._
+import hf._      // hf is HepekForm
+import classes._ // utility classes
 
 case class ExampleFormView(
-    form: Form[ExampleForm],
-    success: Boolean = false
+    exampleForm: Form[ExampleForm],
+    exampleFormValues: Option[ExampleForm] = None
 )(
     implicit messages: play.api.i18n.Messages
-) extends MainTemplate {
+) extends util.MainTemplate {
 
-  override def pageSettings = super.pageSettings.withTitle("IndexForm")
+  override def pageSettings =
+    super.pageSettings.withTitle("Example form")
 
-  // hf is short for HepekForm
-  override def pageContent: Frag = div(
-    hf.form()(controllers.routes.HomeController.createForm)(
-      hf.inputText()(
-        form("email"),
-        help = "Please enter your email"
-      ),
-      hf.inputPassword(required)(form("password")),
-      hf.fc.inputSubmit()("Submitni") // low-level, raw API
-    ),
-    if (!success) frag()
-    else p(cls := "bg-success")("Successfully submited form!")
+  override def pageContent = div(
+    h1("Example form"),
+    row(third(), third(formFrag), third()),
+    exampleFormValues.map { values =>
+      p(bgSuccess)(
+        """
+          **Successfully submited form!**  
+          Values:
+        """.md,
+        values.toString
+      )
+    }
   )
+
+  // fc is short for FormComponents
+  def formFrag =
+    form()(controllers.routes.HomeController.createForm)(
+      fc.formFieldset("Contact data")(
+        inputEmail()(exampleForm("email"), help = "Please enter your email"),
+        inputPassword(required)(exampleForm("password")),
+        inputDate()(exampleForm("dob"), label = "Date of birth")
+      ),
+      fc.formFieldset("Preferences")(
+        inputRadio(
+          exampleForm("favoriteSuperHero"),
+          Seq(("batman", "Batman", Nil), ("superman", "Superman", Nil)),
+          label = "Super hero",
+          checkedValue = "superman",
+          isInline = false
+        ),
+        inputSelectGrouped(multiple)(
+          exampleForm("animals[]"),
+          Seq(
+            "Cats" -> Seq(
+              ("bengal", "Bengal", Nil),
+              ("persian", "Persian", Seq(selected))
+            ),
+            "Dogs" -> Seq(
+              ("goldenRetriever", "Golden retriever", Seq(selected)),
+              ("husky", "Husky", Nil)
+            )
+          ),
+          label = "Animals (multi-select)"
+        )
+      ),
+      fc.inputSubmit()("Submit") // low-level, raw API
+    )
 }

@@ -19,11 +19,13 @@ class HomeController @Inject()(cc: ControllerComponents)
   def createForm() = Action { implicit request =>
     ExampleForm.form.bindFromRequest.fold(
       errors => {
+        println(s"Got form errors: $errors")
         BadRequest(views.ExampleFormView(errors))
       },
-      t => {
-        val filledForm = ExampleForm.form.fill(t)
-        Ok(views.ExampleFormView(filledForm, true))
+      value => {
+        println(s"Got form value: $value")
+        val filledForm = ExampleForm.form.fill(value)
+        Ok(views.ExampleFormView(filledForm, Some(value)))
       }
     )
   }
