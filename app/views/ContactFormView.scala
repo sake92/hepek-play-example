@@ -1,12 +1,12 @@
 package views
 
 import play.api.data.Form
+import play.api.mvc.Request
 import play.filters.csrf.CSRF
-import play.api.mvc.RequestHeader
+
 import scalatags.Text.all.{form => _, _}
 import forms.ContactForm
-import util.Imports._
-import grid._
+import util.Imports._, classes._, grid._
 import hf._                           // hf is HepekForm
 import fc.{formFieldset, inputSubmit} // fc is short for FormComponents
 
@@ -14,7 +14,7 @@ case class ContactFormView(
     contactForm: Form[ContactForm.Data],
     contactFormValues: Option[ContactForm.Data] = None
 )(
-    implicit request: RequestHeader,
+    implicit request: Request[_],
     messages: play.api.i18n.Messages
 ) extends util.MainTemplate {
 
@@ -66,6 +66,6 @@ case class ContactFormView(
         val maybeToken = CSRF.getToken
         maybeToken.map(token => fc.inputHidden(value := token.value)(token.name))
       },
-      inputSubmit()("Submit")
+      inputSubmit(btnPrimary)("Submit")
     )
 }
