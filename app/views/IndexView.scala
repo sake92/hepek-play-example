@@ -17,7 +17,7 @@ case class IndexView() extends util.MainTemplate {
       - two
       - test
 
-      Go to [form example](${linkTo(controllers.routes.HomeController.showForm)})
+      Go to [contact form](${linkTo(controllers.routes.HomeController.showForm)})
       """.md
   )
 
