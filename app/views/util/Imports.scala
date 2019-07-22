@@ -16,9 +16,14 @@ object Imports extends PlayBundle with BootstrapBundle with BasicComponents {
     val fc = customForm
   }
 
-  // nice centering grid
   object grid extends Grid {
     override def screenRatios =
-    super.screenRatios.withAll(Ratios(Ratio(1, 1), Ratio(1, 2, 1)))
+      super.screenRatios.withAll(Ratios().withSingle(1, 2, 1).withThird(1, 2, 1))
   }
+
+  def linkTo(routeCall: play.api.mvc.Call): String =
+    routeCall.url
+
+  def asset(assetPath: String): String =
+    controllers.routes.Assets.versioned(controllers.Assets.Asset(assetPath)).url
 }

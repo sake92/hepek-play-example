@@ -1,0 +1,9 @@
+
+body {
+  padding-top: 33px; /* fixed top navbar */
+}
+
+.navbar-brand > span > img {
+  height: 30px; /* make logo smaller */
+}
+
