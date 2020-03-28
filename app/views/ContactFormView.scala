@@ -2,20 +2,20 @@ package views
 
 import play.api.data.Form
 import play.api.mvc.Request
-import play.filters.csrf.CSRF
+import play.api.i18n.Messages
 
 import scalatags.Text.all.{form => _, _}
 import forms.ContactForm
-import util.Imports._, classes._, grid._
+import util.Imports._, Classes._, grid._
 import hf._                           // hf is HepekForm
-import fc.{formFieldset, inputSubmit} // fc is short for FormComponents
+import fc.{formFieldset, inputSubmit} // fc is FormComponents
 
 case class ContactFormView(
     contactForm: Form[ContactForm.Data],
     contactFormValues: Option[ContactForm.Data] = None
 )(
     implicit request: Request[_],
-    messages: play.api.i18n.Messages
+    messages: Messages
 ) extends util.MainTemplate {
 
   override def pageSettings =
@@ -23,49 +23,41 @@ case class ContactFormView(
 
   override def pageContent = row(
     h2("Contact form"),
-    formFrag,
+    
     contactFormValues.map { values =>
       Panel.panel(
-        panelType = Panel.Type.Success,
-        body = values.toString,
-        header = Some("Successfully submited form!")
+        panelType = Panel.Companion.Type.Success,
+        body = "Data received: " + values.toString,
+        header = Some("Successfully submitted form!")
       )
-    }
+    },
+    formFrag
   )
 
   def formFrag =
     form()(controllers.routes.HomeController.createForm)(
-      formFieldset("Contact data")(
-        inputEmail()(contactForm("email"), help = "Please enter your email"),
-        inputPassword(required)(contactForm("password")),
+      formFieldset("Contact data:")(
+        inputEmail()(contactForm("email"), label = "Email"),
+        inputPassword()(contactForm("password"), label = "Password"),
         inputDate()(contactForm("dob"), label = "Date of birth")
       ),
-      formFieldset("Preferences")(
+      formFieldset("Preferences:")(
         inputRadio(
           contactForm("favoriteSuperHero"),
-          Seq(("batman", "Batman", Nil), ("superman", "Superman", Nil)),
+          model.Hero.All.map(h => (h.key, h.name, Nil)),
           label = "Super hero",
-          checkedValue = "superman",
+          checkedValue = model.Hero.Superman.key,
           isInline = false
         ),
-        inputSelectGrouped(multiple)(
+        inputSelectGrouped(multiple, size := "6")(
           contactForm("animals[]"),
-          Seq(
-            "Cats" -> Seq(
-              ("bengal", "Bengal", Nil),
-              ("persian", "Persian", Seq(selected))
-            ),
-            "Dogs" -> Seq(
-              ("goldenRetriever", "Golden retriever", Seq(selected)),
-              ("husky", "Husky", Nil)
-            )
-          ),
+          model.Animal.All.map {
+            case (tpe, animals) =>
+              tpe -> animals.map(h => (h.key, h.name, Nil))
+          }.toList,
           label = "Animals (multi-select)"
         )
-      ), { // TODO make helper
-        val maybeToken = CSRF.getToken
-        maybeToken.map(token => fc.inputHidden(value := token.value)(token.name))
-      },
+      ),
       inputSubmit(btnPrimary)("Submit")
     )
 }

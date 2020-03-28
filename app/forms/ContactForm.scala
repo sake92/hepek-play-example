@@ -10,7 +10,7 @@ object ContactForm {
   val form = Form(
     mapping(
       "email"             -> nonEmptyText.verifying(Constraints.emailAddress),
-      "password"          -> nonEmptyText,
+      "password"          -> text,
       "dob"               -> localDate,
       "favoriteSuperHero" -> text,
       "animals"           -> list(text)

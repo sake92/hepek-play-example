@@ -7,3 +7,6 @@ body {
   height: 30px; /* make logo smaller */
 }
 
+.help-block {
+  display: inline;
+}
