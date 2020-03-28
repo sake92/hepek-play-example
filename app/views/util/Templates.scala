@@ -8,7 +8,7 @@ trait MainTemplate extends HtmlPage {
   private val formLink = controllers.routes.HomeController.showForm().url
 
   override def bodyContent =
-    div(cls := bootstrapContainer)(
+    div(
       Navbar.simple(
         brandUrl = "/",
         brandName = Some("My Company Ltd."),

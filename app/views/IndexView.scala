@@ -1,6 +1,7 @@
 package views
 
-import util.Imports._, grid._
+import scalatags.Text.all._
+import util.Imports._, grid._, Form._, Classes._
 
 case class IndexView() extends util.MainTemplate {
 
@@ -14,9 +15,10 @@ case class IndexView() extends util.MainTemplate {
       - one
       - two
       - test
-
-      Go to [contact form](${controllers.routes.HomeController.showForm.url})
-      """.md
+    """.md,
+    hyperlink(controllers.routes.HomeController.showForm.url)(
+      button(btnClass, btnPrimary)("Go to contact form")
+    )
   )
 
 }

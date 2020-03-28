@@ -9,8 +9,8 @@ object ContactForm {
 
   val form = Form(
     mapping(
-      "email"             -> nonEmptyText.verifying(Constraints.emailAddress),
-      "password"          -> text,
+      "email"             -> text.verifying(Constraints.emailAddress),
+      "password"          -> nonEmptyText, // picked up by Hepek, adds HTML5 validation! :)
       "dob"               -> localDate,
       "favoriteSuperHero" -> text,
       "animals"           -> list(text)

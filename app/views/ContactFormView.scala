@@ -23,7 +23,6 @@ case class ContactFormView(
 
   override def pageContent = row(
     h2("Contact form"),
-    
     contactFormValues.map { values =>
       Panel.panel(
         panelType = Panel.Companion.Type.Success,
