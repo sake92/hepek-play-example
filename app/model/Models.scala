@@ -1,27 +1,24 @@
 package model
 
-sealed abstract class Hero(val key: String, val name: String)
-
-object Hero {
-  case object Batman   extends Hero("batman", "Batman")
-  case object Superman extends Hero("superman", "Superman")
-  val All = List[Hero](Batman, Superman)
+case class Hero(name: String) {
+  def key = name.toLowerCase.replace(" ", "-")
 }
 
-sealed abstract class Animal(val tpe: String) {
-  def key: String
-  def name: String
+object Hero {
+  val All = List(Hero("Batman"), Hero("Superman"))
+}
+
+////////////////////////
+case class Animal(name: String) {
+  def key = name.toLowerCase.replace(" ", "-")
 }
 
 object Animal {
 
-  case class Dog(val key: String, val name: String) extends Animal("Dog")
-  case class Cat(val key: String, val name: String) extends Animal("Cat")
-
-  val All: Map[String, List[Animal]] = List(
-    Dog("goldenRetriever", "Golden retriever"),
-    Dog("husky", "Husky"),
-    Cat("bengal", "Bengal"),
-    Cat("persian", "Persian")
-  ).groupBy(_.tpe)
+  val All = List(
+    Animal("Golden retriever"),
+    Animal("Husky"),
+    Animal("Bengal"),
+    Animal("Persian")
+  )
 }

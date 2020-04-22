@@ -1,17 +1,17 @@
 package views
 
-import play.api.data.Form
+import play.api.data.{Form => PlayForm}
 import play.api.mvc.Request
 import play.api.i18n.Messages
 
 import scalatags.Text.all.{form => _, _}
 import forms.ContactForm
-import util.Imports._, Classes._, grid._
-import hf._                           // hf is HepekForm
-import fc.{formFieldset, inputSubmit} // fc is FormComponents
+import util.Imports.Bundle._, Grid._, Classes._
+import util.Imports.Bundle.Form.{formFieldset, inputSubmit}
+import util.Imports.PlayBundle.HPF._
 
 case class ContactFormView(
-    contactForm: Form[ContactForm.Data],
+    contactForm: PlayForm[ContactForm.Data],
     contactFormValues: Option[ContactForm.Data] = None
 )(
     implicit request: Request[_],
@@ -45,15 +45,14 @@ case class ContactFormView(
           contactForm("favoriteSuperHero"),
           model.Hero.All.map(h => (h.key, h.name, Nil)),
           label = "Super hero",
-          checkedValue = model.Hero.Superman.key,
+          checkedValue = model.Hero.All.head.key,
           isInline = false
         ),
-        inputSelectGrouped(multiple, size := "6")(
+        inputSelect(multiple, size := "6")(
           contactForm("animals[]"),
-          model.Animal.All.map {
-            case (tpe, animals) =>
-              tpe -> animals.map(h => (h.key, h.name, Nil))
-          }.toList,
+          model.Animal.All.map { animal =>
+            (animal.key, animal.name, Nil)
+          },
           label = "Animals (multi-select)"
         )
       ),

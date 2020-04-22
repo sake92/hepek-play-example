@@ -1,7 +1,7 @@
 package views
 
 import scalatags.Text.all._
-import util.Imports._, grid._, Form._, Classes._
+import util.Imports.Bundle._, Grid._, Classes._
 
 case class IndexView() extends util.MainTemplate {
 
