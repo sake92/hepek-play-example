@@ -26,8 +26,8 @@ case class ContactFormView(
     contactFormValues.map { values =>
       Panel.panel(
         panelType = Panel.Companion.Type.Success,
-        body = "Data received: " + values.toString,
-        header = Some("Successfully submitted form!")
+        header = Some("Successfully submitted form!"),
+        body = "Data received: " + values.toString
       )
     },
     formFrag
