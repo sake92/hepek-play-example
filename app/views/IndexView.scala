@@ -1,14 +1,13 @@
 package views
 
-import scalatags.Text.all._
-import util.Imports.Bundle._, Grid._, Classes._
+import util.*, Bundle.*, Tags.*
 
-case class IndexView() extends util.MainTemplate {
+object IndexView extends util.MainTemplate {
 
   override def pageSettings =
     super.pageSettings.withTitle("Play Hepek")
 
-  override def pageContent = row(
+  override def pageContent = Grid.row(
     s"""
       ## Welcome
       Some content..
@@ -16,8 +15,8 @@ case class IndexView() extends util.MainTemplate {
       - two
       - test
     """.md,
-    hyperlink(controllers.routes.HomeController.showForm.url)(
-      button(btnClass, btnPrimary)("Go to contact form")
+    a(href := controllers.routes.HomeController.showForm().url)(
+      button(Classes.btnClass, Classes.btnPrimary)("Go to contact form")
     )
   )
 

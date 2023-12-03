@@ -1,16 +1,16 @@
 package forms
 
+import java.time.LocalDate
 import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints
-import java.time.LocalDate
 
 object ContactForm {
 
   val form = Form(
     mapping(
       "email"             -> text.verifying(Constraints.emailAddress),
-      "password"          -> nonEmptyText, // picked up by Hepek, adds HTML5 validation! :)
+      "password"          -> nonEmptyText, // picked up by Hepek, adds HTML5 validation automatically! :)
       "dob"               -> localDate,
       "favoriteSuperHero" -> text,
       "animals"           -> list(text)
@@ -24,4 +24,8 @@ object ContactForm {
       favoriteSuperHero: String,
       animals: List[String]
   )
+  object Data {
+    def unapply(data: Data): Option[(String, String, LocalDate, String, List[String])] =
+      Some((data.email, data.password, data.dob, data.favoriteSuperHero, data.animals))
+  }
 }

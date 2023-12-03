@@ -18,3 +18,5 @@ bin/
 .idea/
 .bloop/
 .metals/
+.bsp/
+.vscode/

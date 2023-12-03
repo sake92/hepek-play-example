@@ -1,9 +1,9 @@
 package views.util
 
 import scalatags.Text.all._
-import Imports.Bundle._, Classes._
+import Bundle._, Classes._
 
-trait MainTemplate extends HtmlPage {
+trait MainTemplate extends Page {
 
   private val formLink = controllers.routes.HomeController.showForm().url
 
@@ -14,13 +14,13 @@ trait MainTemplate extends HtmlPage {
         brandName = Some("My Company Ltd."),
         brandIconUrl = Some("https://img.icons8.com/color/48/000000/company.png"),
         left = List(
-          hyperlink(formLink)("Form"),
+          a(href := formLink)("Form"),
           Navbar.simpleNestedLink(
             "Nested",
-            List(hyperlink("#")("Nested1"), hyperlink("#")("Nested2"))
+            List(a(href := "#")("Nested1"), a(href := "#")("Nested2"))
           )
         ),
-        right = List(hyperlink("#")("Contact us"))
+        right = List(a(href := "#")("Contact us"))
       ),
       pageContent
     )
