@@ -1,8 +1,8 @@
 package controllers
 
-import javax.inject._
-import play.api._
-import play.api.mvc._
+import javax.inject.*
+import play.api.*
+import play.api.mvc.*
 import play.api.i18n.I18nSupport
 import ba.sake.hepek.html.HtmlPage
 import ba.sake.hepek.play.given

@@ -1,7 +1,6 @@
 package views.util
 
-import scalatags.Text.all._
-import Bundle._, Classes._
+import Bundle.*, Tags.*, Classes.*
 
 trait MainTemplate extends Page {
 

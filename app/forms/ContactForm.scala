@@ -1,8 +1,8 @@
 package forms
 
 import java.time.LocalDate
-import play.api.data._
-import play.api.data.Forms._
+import play.api.data.*
+import play.api.data.Forms.*
 import play.api.data.validation.Constraints
 
 object ContactForm {
@@ -10,7 +10,7 @@ object ContactForm {
   val form = Form(
     mapping(
       "email"             -> text.verifying(Constraints.emailAddress),
-      "password"          -> nonEmptyText, // picked up by Hepek, adds HTML5 validation automatically! :)
+      "password"          -> nonEmptyText, // Hepek adds HTML5 validation automatically! :)
       "dob"               -> localDate,
       "favoriteSuperHero" -> text,
       "animals"           -> list(text)
