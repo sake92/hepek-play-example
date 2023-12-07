@@ -4,12 +4,12 @@ import play.api.data.{Form => PlayForm}
 import play.api.mvc.Request
 import play.api.i18n.Messages
 
-import forms.ContactForm
-import util.*, PlayBundle.PF, Bundle.*, Tags.*
+import models.*
+import PlayBundle.*, Bundle.*, Tags.*
 
-class ContactFormView(
-    contactForm: PlayForm[ContactForm.Data],
-    contactFormValues: Option[ContactForm.Data] = None
+class CreateCustomerView(
+    contactForm: PlayForm[CreateCustomer.Data],
+    contactFormValues: Option[CreateCustomer.Data] = None
 )(using request: Request[?], messages: Messages)
     extends MainTemplate {
 
@@ -38,14 +38,14 @@ class ContactFormView(
       Form.formFieldset("Preferences:")(
         PF.inputRadio(
           contactForm("favoriteSuperHero"),
-          model.Hero.All.map(h => (h.key, h.name, Nil)),
+          Hero.All.map(h => (h.key, h.name, Nil)),
           label = "Super hero",
-          checkedValue = model.Hero.All.head.key,
+          checkedValue = Hero.All.head.key,
           isInline = false
         ),
         PF.inputSelect(multiple, size := "6")(
           contactForm("animals[]"),
-          model.Animal.All.map { animal =>
+          Animal.All.map { animal =>
             (animal.key, animal.name, Nil)
           },
           label = "Animals (multi-select)"

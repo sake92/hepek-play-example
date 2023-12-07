@@ -1,6 +1,6 @@
-package views.util
+package views
 
-import Bundle.*, Tags.*, Classes.*
+import PlayBundle.Bundle.*, Tags.*, Classes.*
 
 trait MainTemplate extends Page {
 
@@ -8,15 +8,18 @@ trait MainTemplate extends Page {
 
   override def bodyContent =
     div(clsContainer)(
-      Navbar.simple(
+      Navbar.nav(
         brandUrl = "/",
         brandName = Some("My Company Ltd."),
         brandIconUrl = Some("https://img.icons8.com/color/48/000000/company.png"),
         left = List(
-          a(href := formLink)("Form"),
-          Navbar.simpleNestedLink(
+          Navbar.link(formLink, "Form"),
+          Navbar.dropdown(
             "Nested",
-            List(a(href := "#")("Nested1"), a(href := "#")("Nested2"))
+            List(
+              Navbar.dropdownLink("#", "Nested1"),
+              Navbar.dropdownLink("#", "Nested2")
+            )
           )
         ),
         right = List(a(href := "#")("Contact us"))

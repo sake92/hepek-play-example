@@ -1,8 +1,8 @@
 package views
 
-import util.*, Bundle.*, Tags.*
+import PlayBundle.Bundle.*, Tags.*
 
-object IndexView extends util.MainTemplate {
+object IndexView extends MainTemplate:
 
   override def pageSettings =
     super.pageSettings.withTitle("Play Hepek")
@@ -19,5 +19,3 @@ object IndexView extends util.MainTemplate {
       button(Classes.btnClass, Classes.btnPrimary)("Go to contact form")
     )
   )
-
-}
