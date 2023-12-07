@@ -21,18 +21,18 @@ class HomeController @Inject() (cc: ControllerComponents)
     Ok(views.CreateCustomerView(CreateCustomer.form))
   }
 
-  def createForm() = Action { implicit request: Request[?] =>
+  def submitForm() = Action { implicit request: Request[?] =>
     CreateCustomer.form
       .bindFromRequest()
       .fold(
-        errors => {
-          println(s"Got form errors: $errors")
-          BadRequest(views.CreateCustomerView(errors))
+        errorForm => {
+          println(s"Got form with errors: ${errorForm}")
+          BadRequest(views.CreateCustomerView(errorForm))
         },
-        value => {
-          println(s"Got form value: $value")
-          val filledForm = CreateCustomer.form.fill(value)
-          Ok(views.CreateCustomerView(filledForm, Some(value)))
+        formData => {
+          println(s"Got form data: ${formData}")
+          val filledForm = CreateCustomer.form.fill(formData)
+          Ok(views.CreateCustomerView(filledForm))
         }
       )
   }

@@ -16,6 +16,6 @@ object IndexView extends MainTemplate:
       - test
     """.md,
     a(href := controllers.routes.HomeController.showForm().url)(
-      button(Classes.btnClass, Classes.btnPrimary)("Go to contact form")
+      button(Classes.btnClass, Classes.btnPrimary)("Go to customer form")
     )
   )

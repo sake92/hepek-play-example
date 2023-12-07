@@ -2,7 +2,7 @@
 GET     /                                   controllers.HomeController.index()
 
 GET     /showForm                           controllers.HomeController.showForm()
-POST    /createForm                         controllers.HomeController.createForm()
+POST    /submitForm                         controllers.HomeController.submitForm()
 
 
 # Map static resources from the /public folder to the /assets URL path
