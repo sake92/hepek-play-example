@@ -10,8 +10,8 @@ trait MainTemplate extends Page {
     div(clsContainer)(
       Navbar.nav(
         brandUrl = "/",
-        brandName = Some("My Company Ltd."),
-        brandIconUrl = Some("https://img.icons8.com/color/48/000000/company.png"),
+        brandName = Some("Hepek - Play"),
+        brandIconUrl = Some("https://www.playframework.com/favicon.ico"),
         left = List(
           Navbar.link(formLink, "Form"),
           Navbar.dropdown(

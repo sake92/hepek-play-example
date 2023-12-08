@@ -3,6 +3,7 @@ package views
 import play.api.data.{Form => PlayForm}
 import play.api.mvc.Request
 import play.api.i18n.Messages
+import play.filters.HttpFiltersComponents
 
 import models.*
 import PlayBundle.*, Bundle.*, Tags.*
